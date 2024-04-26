@@ -31,8 +31,7 @@ class ProductController extends Controller
         //define validation rules
         $validator = Validator::make($request->all(), [
             'nama'        => 'required|string|min:3|max:255',
-            'kategori'    => 'required|array|min:1',
-            'kategori.*'  => 'required|string|distinct|min:1',
+            'kategori'    => 'required|string|min:1',
             'stok'        => 'required|numeric',
             'harga'       => 'required|numeric',
             'gambar'      => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -118,8 +117,8 @@ class ProductController extends Controller
         // Check and handle image upload
         if ($request->hasFile('gambar')) {
             $image = $request->file('gambar');
-            $image->storeAs('public/posts', $image->hashName());
-            Storage::delete('public/posts/' . basename($product->image));
+            $image->storeAs('public/products', $image->hashName());
+            Storage::delete('public/products/' . basename($product->image));
             $updateData['gambar'] = $image->hashName();
         }
 
