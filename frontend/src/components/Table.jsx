@@ -1,10 +1,13 @@
 // src/components/Table.jsx
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../services/AuthService';
 import { getAllData, deleteData } from '../services/ProductService';
 import Form from './Form';
 
 function Table() {
+   const navigate = useNavigate()
    const [products, setProducts] = useState([]);
    const [showForm, setShowForm] = useState(false);
    const [selectedProduct, setSelectedProduct] = useState(null);
@@ -40,6 +43,11 @@ function Table() {
       setShowForm(true);
    };
 
+   const handleLogout = () => {
+      logoutUser();
+      navigate('/login');
+   };
+
    return (
       <div className="container mt-4">
          <h1 className='text-center fw-semibold'>Management Inventory</h1>
@@ -54,6 +62,7 @@ function Table() {
             />
          )}
          <button className="btn btn-primary mb-3" onClick={handleAddProduct}>Tambah Produk Baru</button>
+         <button className="btn btn-danger mb-3" onClick={handleLogout}>Logout</button>
          <table className="table table-striped">
             <thead className="table-dark">
                <tr>

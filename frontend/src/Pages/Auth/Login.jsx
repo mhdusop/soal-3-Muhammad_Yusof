@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from './../../services/AuthService';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,6 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 function LoginForm() {
    const [credentials, setCredentials] = useState({ email: '', password: '' });
    const navigate = useNavigate();
+
+   useEffect(() => {
+      const token = localStorage.getItem('userToken');
+      if (token) {
+         navigate('/home');
+      }
+   }, [navigate]);
 
    const handleChange = (event) => {
       const { name, value } = event.target;
@@ -20,6 +27,7 @@ function LoginForm() {
          if (response.success) {
             toast.success('Login Successful');
             navigate('/home');
+            location.reload()
          } else {
             toast.error(response.message || 'Login failed');
          }

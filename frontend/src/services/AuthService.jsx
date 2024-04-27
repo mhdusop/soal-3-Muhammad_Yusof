@@ -26,3 +26,7 @@ export const loginUser = async (userData) => {
       throw error;
    }
 };
+
+export const logoutUser = () => {
+   localStorage.removeItem('userToken');
+}
