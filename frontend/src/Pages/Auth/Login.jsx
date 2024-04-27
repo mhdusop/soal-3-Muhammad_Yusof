@@ -12,6 +12,7 @@ function LoginForm() {
       const token = localStorage.getItem('userToken');
       if (token) {
          navigate('/home');
+         location.reload()
       }
    }, [navigate]);
 
